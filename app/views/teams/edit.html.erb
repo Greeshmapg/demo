@@ -1,0 +1,25 @@
+<div class="login-page">
+  <div class="form">
+    <h2>UPDATE TEAM</h2>
+    <%= form_for @team do |f| %>
+      <div class="field" >
+        <%= f.label :Team_name, :class => "label" %><br />
+        <%= f.text_field :name ,autofocus: true ,:value => @team.name%>
+      </div>
+
+      <div class="field">
+        <%= f.label :image, :class => "label" %><br />
+        <%= f.file_field :image %>
+      </div>
+
+       <div class="field" >
+        <%= f.label :Maximum_size, :class => "label" %><br />
+       <%= f.text_field :max_no_users, autofocus: true %>
+      </div>
+      <%= f.submit "UPDATE" ,:class => "btn btn-primary"%>
+    <% end %>
+  </div>
+</div>
+
+
+

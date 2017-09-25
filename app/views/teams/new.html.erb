@@ -1,0 +1,35 @@
+<% if @team.errors.any? %>
+    <ul class="errors">
+      <% @team.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+<% end %>
+
+<div class="login-page">
+  <div class="form">
+    <h2>NEW TEAM</h2>
+    <%= form_for @team do |f| %>
+
+      <div class="field" >
+        <%= f.label :Team_name, :class => "label" %><br />
+        <%= f.text_field :name ,autofocus: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :image, :class => "label" %><br />
+        <%= f.file_field :image %>
+      </div>
+
+       <div class="field" >
+        <%= f.label :Maximum_size, :class => "label" %><br />
+       <%= f.text_field :max_no_users, autofocus: true %>
+      </div>
+      <%= f.submit "CREATE" ,:class => "btn btn-primary blueText" %>
+
+    <% end %>
+  </div>
+</div>
+
+
+

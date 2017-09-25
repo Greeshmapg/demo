@@ -1,0 +1,66 @@
+<%= form_for(@user, url: custom_user_path) do |f| %>
+  <% if @user.errors.any? %>
+    <ul class="errors">
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+<div class="login-page">
+  <div class="form">
+    <h2>Sign up</h2>
+
+      <div class="field">
+        <%= f.label :First_name %><br />
+        <%= f.text_field :first_name, autofocus: true %>
+      </div>
+      <div class="field">
+        <%= f.label :Last_name %><br />
+        <%= f.text_field :last_name%>
+      </div>
+      <div class="field">
+        <%= f.label :DOB %><br />
+        <%= f.text_field :dob, class: "datepicker"%>
+      </div>
+      <div class="field">
+        <%= f.label :Phone_number %><br />
+        <%= f.text_field :phone_number%>
+      </div>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function() {
+  $('.datepicker').datepicker();
+ });
+  $( function() {
+    $( "#datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: '2016:' + (new Date).getFullYear()    });
+      console.log="hello"  } );
+ </script>
+
+

@@ -1,0 +1,42 @@
+<div class="bodyDiv">
+  <div class="row">
+      <div class="team col-md-6">
+        <div class="form">
+          <h1><%= @team.name%></h1><br>
+          <h3>Size  :<%= @team.max_no_users %></h3>
+          <%= image_tag @team.image.url %>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <table class="table table-hover">
+           <tbody>
+              <tr>
+                <th class="tdPadding">
+                  NAME
+                </th>
+                <th class="tdPadding">
+                  Email
+                </th>
+                <% if current_user.admin? %>
+                  <th>
+                    <%= link_to 'Add New User', custom_new_path(@team.id), class: "btn btn-primary" %>
+                  </th>
+                <%end%>
+              </tr>
+            <% @users.each do |f| %>
+              <tr>
+                <td class="tdPadding"><%= f.first_name %></td>
+                <td class="tdPadding"><%= f.email %></td>
+                <% if current_user.admin? %>
+                  <td class="tdPadding"><%= link_to 'Delete', remove_user_team_path(user_id: f.id) %></td>
+                <%end%>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+
+
