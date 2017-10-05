@@ -1,0 +1,36 @@
+<div class="modal" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+         <h3 id="myModalLabel">Delete</h3>
+      </div>
+      <div class="modal-body" >
+          <%= "Enter Team Name:" %>
+           <input type="text" id="team_name">
+      </div>
+      <div class="modal-footer">
+        <%= content_tag("div", nil, :id => 'invisible', :data => {:teamname => @team.name}) %>
+
+        <%= link_to "Delete Team", @team, method: :delete,
+                  class: "btn btn-primary disabled", id: "del_button", remote:true ,            'data-dismiss' => "modal"%>
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#team_name').keyup(function() {
+    var teamName = $('#invisible').data('teamname');
+      if($(this).val() == teamName){
+          $("#del_button").removeClass('disabled');
+          $("#del_button").css("background-color", "red");
+      }else{
+        $('#del_button').addClass('disabled')
+        $("#del_button").css("background-color", "#286090");
+      }
+  });
+
+
+
+</script>

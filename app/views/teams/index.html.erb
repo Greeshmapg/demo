@@ -1,43 +1,46 @@
-<div class="bodydiv">
-
-  <% if current_user.admin? %>
-    <div class="form">
-       <%= link_to 'Add New Team', new_team_path, class: "btn btn-primary" %>
-    </div>
-  <%end%>
-
+<div class="bodyDiv">
   <div class="row">
-    <% @teams.each do |f| %>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-img-top">
-            <% if f.image? %>
-              <%= link_to image_tag( f.image.url), addtoteam_path(f) %>
-              <%else %>
-              <%= link_to image_tag ("group.jpg"), addtoteam_path(f)%>
-              <%end %>
-          </div>
-          <div class="card-block">
-            <h4 class="card-title"><%= f.name %></h4>
-            <p class="card-text">Size :<%= f.max_no_users %></p>
-            <% if current_user.admin? %>
-              <div class="row">
-                <div class="col-md-6">
-                  <%= link_to 'Edit Team', edit_team_path(f), class: "btn btn-primary" %>
-                </div>
-                <div class="col-md-6">
-                  <%= link_to "Delete Team", f, method: :delete,
-                                                data: { confirm: "You sure?" },class: "btn btn-primary" %>
-                </div>
-              </div>
-            <%else%>
-              <%= link_to 'Left Team', remove_user_team_path(user_id: current_user.id,id: f.id), class: "btn btn-primary" %>
+<div id="delete_modal-window">
+</div>
 
-           <%end%>
-          </div>
-        </div>
+
+
+    <div class="col-md-9">
+      <div id="groups_table">
+         <%= render partial: 'groups' %>
       </div>
-    <%end%>
-  </div>
+    </div>
 
+    <div class="col-md-3">
+      <% if current_user.admin? %>
+        <div class="form">
+           <%#= link_to 'Add New Team', new_team_path, class: "btn btn-primary" %>
+           <h2>NEW TEAM</h2>
+        <%= form_for(@team, remote:true, html: {id: "team_form"}) do |f| %>
+          <div id="team_error_div">
+
+          </div>
+
+          <div class="field" >
+            <%#= f.label :Team_name, :class => "label" %><br />
+            <%= f.text_field :name ,autofocus: true, placeholder: "Team name" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :image, :class => "label" %><br />
+            <%= f.file_field :image %>
+          </div>
+
+           <div class="field" >
+            <%#= f.label :Maximum_size, :class => "label" %><br />
+           <%= f.text_field :max_no_users, autofocus: true, placeholder: "Size"%>
+          </div>
+          <%= f.submit "CREATE" ,:class => "btn btn-primary blueText" %>
+
+        <% end %>
+        </div>
+      <%end%>
+    </div>
+
+  </div>
 </div>

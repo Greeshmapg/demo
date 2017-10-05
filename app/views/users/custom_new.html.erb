@@ -1,66 +1,50 @@
 <%= form_for(@user, url: custom_user_path) do |f| %>
-  <% if @user.errors.any? %>
-    <ul class="errors">
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  <% end %>
+
 <div class="login-page">
-  <div class="form">
-    <h2>Sign up</h2>
+<!--   <div class="form"> -->
+   <!--  <h2>Sign up</h2> -->
 
       <div class="field">
-        <%= f.label :First_name %><br />
-        <%= f.text_field :first_name, autofocus: true %>
+        <%#= f.label :First_name %><br />
+        <%= f.text_field :first_name, autofocus: true, placeholder: "First name" %>
       </div>
       <div class="field">
-        <%= f.label :Last_name %><br />
-        <%= f.text_field :last_name%>
+        <%#= f.label :Last_name %><br />
+        <%= f.text_field :last_name, placeholder: "Last name"%>
       </div>
       <div class="field">
-        <%= f.label :DOB %><br />
-        <%= f.text_field :dob, class: "datepicker"%>
+        <%#= f.label :DOB %><br />
+        <%= f.text_field :dob, class: "datepicker", placeholder: "Date of birth"%>
       </div>
       <div class="field">
-        <%= f.label :Phone_number %><br />
-        <%= f.text_field :phone_number%>
-      </div>
-
-      <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email %>
+        <%#= f.label :Phone_number %><br />
+        <%= f.text_field :phone_number, placeholder: "Phone number"%>
       </div>
 
       <div class="field">
-        <%= f.label :password %>
+        <%#= f.label :email %><br />
+        <%= f.email_field :email, placeholder: "Email" %>
+      </div>
+
+      <div class="field">
+        <%#= f.label :password %>
         <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
           <% end %><br />
-          <%= f.password_field :password, autocomplete: "off" %>
+          <%= f.password_field :password, autocomplete: "off", placeholder: "Password" %>
       </div>
 
       <div class="field">
-        <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+        <%#= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm Password" %>
       </div>
 
       <div class="actions">
-        <%= f.submit "Sign up" %>
+        <%= f.submit "Add User" %>
       </div>
     <% end %>
-  </div>
+<!--   </div> -->
 </div>
-<script type="text/javascript">
-  $(function() {
-  $('.datepicker').datepicker();
- });
-  $( function() {
-    $( "#datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      yearRange: '2016:' + (new Date).getFullYear()    });
-      console.log="hello"  } );
- </script>
+
 
 

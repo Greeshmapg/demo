@@ -8,13 +8,13 @@
   </head>
 
   <body>
-    <div class="container">
+
       <header class="navbar navbar- navbar-inverse">
         <div class="appName">
-          <h2>Demo app</h2>
+          <h2 class="twoPadding">Demo app</h2>
         </div>
         <nav>
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right twoPadding">
             <% if signed_in? %>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -30,15 +30,20 @@
           </ul>
         </nav>
       </header>
+
       <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <div class="alert alert-<%= message_type %>">
+         <button class="close" data-dismiss="alert">×</button>
+        <%= message %></div>
       <% end %>
+
       <%= yield %>
+
       <footer class="footer">
         <small>
           @copyright 2014-2017 All rights reserved. Designed by Greeshma PG
         </small>
       </footer>
-    </div>
+
   </body>
 </html>

@@ -1,0 +1,9 @@
+<% @users.each do |user| %>
+  <tr>
+    <td class="tdPadding"><%= user.first_name %></td>
+    <td class="tdPadding"><%= user.email %></td>
+    <% if current_user.admin? %>
+      <td class="tdPadding"><%= link_to 'Delete', remove_user_team_path(user_id: user.id), data: { confirm: 'Are you sure?' }, remote: true %></td>
+    <%end%>
+  </tr>
+<% end %>

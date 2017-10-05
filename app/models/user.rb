@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-  has_one :role
+  belongs_to :role
   has_and_belongs_to_many :teams
+  has_many :tasks
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -18,6 +19,10 @@ class User < ApplicationRecord
   validates :dob, :presence => true
   validates :first_name, :presence => true
   validates :last_name, :presence => true
+  #validates :picture, file_size: { less_than: 2.gigabytes }
+    validate :picture_size_validation
+
+
 
   mount_uploader :picture, PictureUploader
 
@@ -33,5 +38,13 @@ class User < ApplicationRecord
     [first_name,last_name].join(" ")
   end
 
+
+private
+
+  def picture_size_validation
+    if picture.size > 1.megabytes
+        errors.add(:base, "Image should be less than 1MB")
+    end
+  end
 
 end

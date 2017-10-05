@@ -1,52 +1,33 @@
 class UsersController < ApplicationController
 
-  def custom_new
-    @user=User.new
-    @team=Team.find(params[:id])
-  end
+  # def custom_new
+  #   @user = User.new
+  #   @team = Team.find(params[:id])
+  # end
 
   def show
     @user = User.find(params[:id])
-    @role = Role.find(@user.role_id)
   end
 
   def custom_create
     @user_email = params[:user][:email]
-    @user = User.find_by(email: @user_email)
-    @team=Team.find(params[:id])
-
-    if @team.users.count(@team.id) < @team.max_no_users
-      if @user.present?
-        if !@team.users.find_by(id: @user.id).present?
-          if @team.users << @user
-            flash[:success]="User is successfully added to team!"
-            UserMailer.invite_user(@user).deliver
-            redirect_to root_url
-          else
-            flash[:danger] = "Action failed."
-          end
-        else
-          flash[:danger] = "User already exist!!!."
-          redirect_to root_url
-        end
+    @check_user = User.find_by(email: @user_email)
+    @team = Team.find(params[:id])
+    @user = User.new(user_params)
+    @role = Role.find_by(name: "user")
+    @users = @team.users
+    respond_to do |format|
+      @result= NewRegistrationService.new({user: @user, team: @team, role: @role, check_user: @check_user}).check_limit?
+       if @result
+        flash[:success] = "User is successfully added to team!"
+        format.js
       else
-        @user = User.new(user_params)
-        @role = Role.find_by(name:"user")
-        @user.role_id=@role.id
-        password = @user.password
-        if @user.save
-          @team.users << @user
-          UserMailer.user_activation(@user,password).deliver
-          flash[:success]="User is successfully added to team!"
-          redirect_to root_url
-        else
-          render 'custom_new'
-        end
+        flash[:danger] = "Maximum number of users exist or user already exist"
+        format.js
       end
-    else
-      flash[:danger] = "Maximum number of users exist.Please delete some users to add new ones!!!"
-      redirect_to root_url
+
     end
+
   end
 
   def edit
@@ -58,22 +39,48 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       redirect_to user_path
     else
+      @user.picture = nil
       render 'show'
     end
   end
 
-  def show_change_password
-    @user=User.find(params[:id])
+  def view_edit_profile
+    @user = User.find(params[:id])
   end
 
-  def custom_change_password
+  def edit_profile
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      redirect_to users_path
+      redirect_to user_path
     else
-      render 'show_change_password'
+      render 'view_edit_profile'
     end
   end
+
+  # def show_change_password
+  #   @user=User.find(params[:id])
+  # end
+
+  # def custom_change_password
+  #   @user = User.find(params[:id])
+  #   if @user.update(password_params)
+  #     sign_in(@user, :bypass => true)
+  #     redirect_to user_path(@user)
+  #   else
+  #     render 'show_change_password'
+  #   end
+  # end
+
+
+
+#   def emailcheck
+#   @user = User.find(params[:email])
+#   if @user.present?
+#     render :json =>  ["user_email", false , "This User is already taken"]
+#   else
+#     render :json =>  ["user_email", true , ""]
+#   end
+# end
 
 
 private
@@ -87,6 +94,10 @@ private
     end
     def team_params
       params.require(:team).permit(:name, :image, :max_no_users)
+    end
+
+    def password_params
+       params.require(:user).permit(:password, :password_confirmation)
     end
     # def sign_up_params
     #   params.require(:user).permit(:first_name, :email, :password,

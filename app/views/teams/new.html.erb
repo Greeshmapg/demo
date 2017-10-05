@@ -9,7 +9,7 @@
 <div class="login-page">
   <div class="form">
     <h2>NEW TEAM</h2>
-    <%= form_for @team do |f| %>
+    <%= form_for(@team, remote: true) do |f| %>
 
       <div class="field" >
         <%= f.label :Team_name, :class => "label" %><br />

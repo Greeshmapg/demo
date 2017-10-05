@@ -1,0 +1,7 @@
+<% if @user.errors.any? %>
+  $('#error_div').html("<%= j render partial: 'user_error_partial' %>")
+<% else %>
+  $('#user_table').html("<%= j render partial: 'user_details' %>");
+<% end %>
+$('#user_form')[0].reset();
+

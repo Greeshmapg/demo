@@ -13,6 +13,39 @@
 //= require jquery
 //= require bootstrap
 //= require rails-ujs
-//= require turbolinks
+
 //= require_tree
 //= require jquery-ui
+//= require bootbox
+
+
+ // $(function() {
+ //  $('.datepicker').datepicker();
+ // });
+
+$( function() {
+
+
+    $( ".datepicker" ).datepicker({
+      dateFormat: 'dd-mm-yy',
+      changeMonth: true,
+      changeYear: true,
+      yearRange: '1960:' + (new Date).getFullYear()    });
+
+
+
+
+
+
+// $("#user_email").on('change keyup paste',function(){
+//         console.log("change?");
+//     $.post('/checkemail?email='+$("#user_email").val(),function(data){
+
+//     });
+// });
+
+
+
+
+      } );
+

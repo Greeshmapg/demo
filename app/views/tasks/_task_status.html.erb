@@ -1,0 +1,17 @@
+ <%@tasks.each do|task| %>
+  <div class="row">
+                    <div class="col-md-3">
+                      <%= task.name %>
+                    </div>
+                    <div class="col-md-3">
+                      <%= task.user.full_name %>
+                    </div>
+                    <div class="col-md-3">
+                      <%= task.duration %>
+                    </div>
+                    <div class="col-md-3">
+                      <%= task.status %>
+                    </div>
+                  </div>
+
+                <% end %>

@@ -3,64 +3,75 @@
     <div class="col-md-4">
       <div class="card">
           <%= form_for(@user) do |f| %>
-            <%#= @user.email %>
+             <%= render partial: 'user_error_partial' %>
             <% if  @user.picture? %>
                <%= image_tag @user.picture.url %>
             <% else %>
                <%= image_tag ("user.jpg"), size: "100x100"%><br>
             <% end %>
-            <h1><%=@user.first_name%></h1>
+            <h1><%=@user.full_name%></h1>
             <b class="title"> <%= "Change your profile picture :" %></b>
             <%= f.file_field :picture %>
             <%= f.submit "Upload", class: "buttonUpload" %>
-            <%= link_to 'change password',  show_change_password_path(@user), class: "btn btn-primary" %>
+            <%= link_to "Change your password", edit_user_registration_path , class: "btn btn-primary" %>
           <%end %>
         </div>
       </div>
       <div class="col-md-8">
-        <% if @role.name != "admin" %>
+        <% if  !current_user.admin? %>
           <%= form_for(@user) do |f| %>
             <div class="row">
-              <div class="col-md-3">
-              </div>
+
               <div class="col-md-3 label">
                   <%= "Name" %>
               </div>
               <div class="col-md-3 label">
                 <%= @user.full_name %>
               </div>
-              <div class="col-md-3 label">
+              <div class="col-md-6 label">
               </div>
             </div>
+            <br>
             <div class="row">
-              <div class="col-md-3 label">
-              </div>
               <div class="col-md-3 label">
                 <%= "DOB" %>
               </div>
               <div class="col-md-3 label">
-                <%= @user.dob%>
+                <%= @user.dob.strftime("%d/%m/%Y")%>
               </div>
-              <div class="col-md-3 label">
+              <div class="col-md-6 label">
               </div>
             </div>
+            <br>
             <div class="row">
-              <div class="col-md-3 label">
-              </div>
               <div class="col-md-3 label">
                 <%= "Phone Number" %>
               </div>
               <div class="col-md-3 label">
                 <%= @user.phone_number %>
               </div>
-              <div class="col-md-3 label">
+              <div class="col-md-6 label">
               </div>
             </div>
-              <!--  <div class="row">
-              <div class="col-md-12">
-                <centre><%#= link_to "EDIT PROFILE",class: "btn btn-primary" %></centre>
+            <br>
+            <div class="row">
+              <div class="col-md-3 label">
+                <%= "email" %>
               </div>
-            </div> -->
+              <div class="col-md-3 label">
+                <%= @user.email %>
+              </div>
+              <div class="col-md-6 label">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-2 label">
+              </div>
+              <div class="col-md-3 label">
+                <centre><%= link_to "EDIT PROFILE", view_edit_profile_user_path(@user), class: "btn btn-primary" %></centre>
+              </div>
+            </div>
           <%end%>
         <%end%>
       </div>

@@ -1,0 +1,8 @@
+
+
+<% if @task.errors.any? %>
+  $('#task_error_div').html("<%= j render partial: 'task_error_partial' %>")
+<% else %>
+  $('#task_table').append("<%= j render partial: 'new_task_status' %>");
+<% end %>
+$('#task_form')[0].reset();
