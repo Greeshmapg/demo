@@ -20,7 +20,8 @@ class User < ApplicationRecord
   validates :first_name, :presence => true
   validates :last_name, :presence => true
   #validates :picture, file_size: { less_than: 2.gigabytes }
-    validate :picture_size_validation
+  validate :picture_size_validation
+
 
 
 

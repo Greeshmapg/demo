@@ -1,8 +1,12 @@
+
 <% if @team.errors.any? %>
   $('#team_error_div').html("<%= j render partial: 'team_error_partial' %>")
 <% else %>
+$('#flashDiv').html("<%= j render partial: 'layouts/flash_message' %>");
   $('#groups_table').append("<%= j render partial: 'new_partial' %>");
 
 <% end %>
 $('#team_form')[0].reset();
 
+ $("#flashDiv" ).fadeOut(5000);
+$('#team_error_div').fadeOut(5000);

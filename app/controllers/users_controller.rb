@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+   authorize @user
   end
 
   def custom_create
@@ -17,22 +18,21 @@ class UsersController < ApplicationController
     @role = Role.find_by(name: "user")
     @users = @team.users
     respond_to do |format|
-      @result= NewRegistrationService.new({user: @user, team: @team, role: @role, check_user: @check_user}).check_limit?
-       if @result
-        flash[:success] = "User is successfully added to team!"
-        format.js
-      else
-        flash[:danger] = "Maximum number of users exist or user already exist"
-        format.js
-      end
+    if NewRegistrationService.new({user: @user, team: @team, role: @role, check_user: @check_user}).check_limit?
+      flash[:success] = "User is successfully added to team!"
+      format.js
+    else
+      flash[:danger] = "Maximum number of users exist or user already exist"
+      format.js
+    end
 
     end
 
   end
 
-  def edit
-     @user = User.find(params[:id])
-  end
+  # def edit
+  #    @user = User.find(params[:id])
+  # end
 
   def update
     @user = User.find(params[:id])
@@ -46,11 +46,13 @@ class UsersController < ApplicationController
 
   def view_edit_profile
     @user = User.find(params[:id])
+    authorize @user
   end
 
   def edit_profile
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
+      flash[:success] = "User details successfully updated!"
       redirect_to user_path
     else
       render 'view_edit_profile'

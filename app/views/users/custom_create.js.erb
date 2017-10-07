@@ -2,6 +2,8 @@
   $('#error_div').html("<%= j render partial: 'user_error_partial' %>")
 <% else %>
   $('#user_table').html("<%= j render partial: 'user_details' %>");
+  $('#flashDiv').html("<%= j render partial: 'layouts/flash_message' %>");
 <% end %>
 $('#user_form')[0].reset();
 
+$('#flashDiv').fadeOut(3000);

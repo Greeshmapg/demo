@@ -34,6 +34,8 @@ gem 'rails-ujs', '~> 0.1.0'
 gem 'jquery-ui-rails'
 gem 'pundit'
 gem 'bootbox-rails', '~> 0.5.0'
+gem 'client_side_validations'
+gem 'will_paginate'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password

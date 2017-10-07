@@ -19,11 +19,7 @@ class TeamsController < ApplicationController
 
   def index
     @team = Team.new
-    if current_user.admin?
-      @teams = Team.all
-    else
-      @teams = current_user.teams
-    end
+    @teams = policy_scope(Team.all)
   end
 
   def show_delete_modal
@@ -35,7 +31,9 @@ class TeamsController < ApplicationController
 
   def destroy
     @team = Team.find(params[:id]).destroy
+    authorize @team
     @teams = Team.all
+    flash[:success] = "Team deleted!!!"
     respond_to do |format|
       format.js
     end
@@ -44,12 +42,12 @@ class TeamsController < ApplicationController
   def destroy_user
     @team = Team.find(params[:id])
     @user = User.find(params[:user_id])
-     respond_to do |format|
+    respond_to do |format|
     @team.users.delete(@user)
     @users = @team.users
     @teams = @user.teams
     @user.tasks.destroy_all
-
+    flash[:success] = "Deleted from team!!!"
       format.js
     end
   end
@@ -60,7 +58,8 @@ class TeamsController < ApplicationController
 
   def update
     @team = Team.find(params[:id])
-    if @team.users.count >= @team.max_no_users.to_i
+    authorize @team
+    if @team.users.count <=  params[:team][:max_no_users].to_i
       if @team.update_attributes(team_params)
         redirect_to root_path
       else
@@ -74,6 +73,7 @@ class TeamsController < ApplicationController
 
   def add_to_team
     @team = Team.find(params[:id])
+    authorize @team
     @user = User.new
     @users = @team.users.where.not(id: current_user.id)
     @task = Task.new

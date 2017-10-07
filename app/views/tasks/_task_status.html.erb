@@ -1,17 +1,26 @@
- <%@tasks.each do|task| %>
-  <div class="row">
-                    <div class="col-md-3">
-                      <%= task.name %>
-                    </div>
-                    <div class="col-md-3">
-                      <%= task.user.full_name %>
-                    </div>
-                    <div class="col-md-3">
-                      <%= task.duration %>
-                    </div>
-                    <div class="col-md-3">
-                      <%= task.status %>
-                    </div>
-                  </div>
+<tr>
+  <th class="tdPadding">
+    Task
+  </th>
+  <th class="tdPadding">
+    User
+  </th>
+  <th class="tdPadding">
+    Duration
+  </th>
+  <th class="tdPadding">
+    Status
+  </th>
+</tr>
+<%@tasks.each do|task| %>
+  <tr>
+    <td class="tdPadding"><%= task.name %></td>
+    <td class="tdPadding"><%= task.user.full_name %></td>
+    <td class="tdPadding"><%= task.duration %></td>
+    <td class="tdPadding"><%= task.status %></td>
+    <td class="tdPadding"> <%= link_to "delete",task_path(team_id: @team.id, id: task.id), method: :delete,
+                                       data: { confirm: "You sure?" }, remote: true %></td>
+  </tr>
+<% end %>
 
-                <% end %>
+

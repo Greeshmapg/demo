@@ -1,29 +1,25 @@
 <div class="bodyDiv">
+  <div id="delete_modal-window">
+  </div>
   <div class="row">
-<div id="delete_modal-window">
-</div>
+    <% if current_user.admin? %>
+      <div class="col-md-9">
+        <div id="groups_table">
+           <%= render partial: 'groups' %>
 
-
-
-    <div class="col-md-9">
-      <div id="groups_table">
-         <%= render partial: 'groups' %>
+        </div>
       </div>
-    </div>
-
-    <div class="col-md-3">
-      <% if current_user.admin? %>
-        <div class="form">
+      <div class="col-md-3 panel panel-success panelPadding text-center">
            <%#= link_to 'Add New Team', new_team_path, class: "btn btn-primary" %>
            <h2>NEW TEAM</h2>
-        <%= form_for(@team, remote:true, html: {id: "team_form"}) do |f| %>
+        <%= form_for(@team, remote:true, html: {id: "team_form"}, validate: true) do |f| %>
           <div id="team_error_div">
 
           </div>
 
           <div class="field" >
             <%#= f.label :Team_name, :class => "label" %><br />
-            <%= f.text_field :name ,autofocus: true, placeholder: "Team name" %>
+            <%= f.text_field :name ,autofocus: true, placeholder: "Team name", validate: true %>
           </div>
 
           <div class="field">
@@ -33,14 +29,16 @@
 
            <div class="field" >
             <%#= f.label :Maximum_size, :class => "label" %><br />
-           <%= f.text_field :max_no_users, autofocus: true, placeholder: "Size"%>
+           <%= f.text_field :max_no_users, autofocus: true, placeholder: "Size", validate: true%>
           </div>
-          <%= f.submit "CREATE" ,:class => "btn btn-primary blueText" %>
+          <%= f.submit "CREATE" ,:class => "btn btn-primary " %>
 
         <% end %>
-        </div>
-      <%end%>
-    </div>
-
+      </div>
+    <% else %>
+      <div id="groups_table">
+        <%= render partial: 'groups' %>
+      </div>
+    <% end %>
   </div>
 </div>

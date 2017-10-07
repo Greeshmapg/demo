@@ -1,4 +1,5 @@
 <div class="login-page">
+  <%= render 'team_error_partial' %>
   <div class="form">
     <h2>UPDATE TEAM</h2>
     <%= form_for @team do |f| %>
@@ -16,7 +17,8 @@
         <%= f.label :Maximum_size, :class => "label" %><br />
        <%= f.text_field :max_no_users, autofocus: true %>
       </div>
-      <%= f.submit "UPDATE" ,:class => "btn btn-primary"%>
+      <%= f.submit "UPDATE" ,:class => "btn btn-primary blueText"%>
+      <%= link_to 'Back', teams_path %>
     <% end %>
   </div>
 </div>

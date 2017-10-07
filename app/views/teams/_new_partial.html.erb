@@ -1,8 +1,8 @@
 <div class="col-md-4">
-  <div class="card">
+  <div class="panel card">
     <div class="card-img-top">
       <%# if @team.image? %>
-        <%= link_to image_tag( @team.image.url), add_to_team_team_path(id: @team.id) %>
+        <%= link_to image_tag( @team.image.url, class: "style_image"), add_to_team_team_path(id: @team.id) %>
       <%#else %>
         <%#= link_to image_tag ("group.jpg"), add_to_team_path(@team)%>
       <%#end %>

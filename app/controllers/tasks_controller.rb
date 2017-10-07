@@ -44,15 +44,30 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     #@task.status = "started"
     if @task.update_attributes(status: "started")
-        redirect_to add_to_team_path(@task.team_id)
+        redirect_to add_to_team_team_path(@task.team_id)
       else
         redirect_to root_path
       end
   end
+
+  def destroy
+    @task = Task.find(params[:id])
+    @team = Team.find(params[:team_id])
+      if @task.destroy
+        @tasks = @team.tasks
+        respond_to do |format|
+        flash[:success] = "Task deleted"
+        format.js
+      end
+    end
+  end
+
 
   private
 
   def task_params
     params.require(:task).permit(:name, :duration, :status, :user_id, :team_id)
   end
+
+
 end

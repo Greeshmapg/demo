@@ -5,12 +5,12 @@ class Task < ApplicationRecord
   validates :duration, presence: true,
             :numericality => true
 
-def check_status?
-  if status
-    true
-  else
-    false
+  def check_status?
+    if status
+      true
+    else
+      false
+    end
   end
-end
 
 end

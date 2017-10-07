@@ -13,15 +13,13 @@
 //= require jquery
 //= require bootstrap
 //= require rails-ujs
-
+//= require turbolinks
 //= require_tree
 //= require jquery-ui
 //= require bootbox
+//= require rails.validations
 
 
- // $(function() {
- //  $('.datepicker').datepicker();
- // });
 
 $( function() {
 
@@ -35,14 +33,7 @@ $( function() {
 
 
 
-
-
-// $("#user_email").on('change keyup paste',function(){
-//         console.log("change?");
-//     $.post('/checkemail?email='+$("#user_email").val(),function(data){
-
-//     });
-// });
+$('#user_form')[0].reset();
 
 
 

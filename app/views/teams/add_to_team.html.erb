@@ -3,13 +3,16 @@
   <!-- Common division -->
   <div class="row">
     <div class="team col-md-3 teamImage">
-       <%= image_tag @team.image.url, :class => "img-circle " %>
+       <%= image_tag @team.image.url, :class => "img-circle style_image"  %>
     </div>
-    <div class="team col-md-9">
+    <div class="team col-md-7">
       <h1><%= @team.name%></h1>
       <h3>Team Size  :<%= @team.max_no_users %></h3>
-      <h3><%#= @team.users.count(@team.id) %>
+      <!-- <h3> --><%#= @team.users.count(@team.id) %>
     </div>
+    <div class="team col-md-2">
+     <%= link_to 'Back', teams_path %>
+     </div>
   </div>
   <!-- Common division ended -->
 
@@ -33,24 +36,14 @@
         <div class="col-md-6">
           <table class="table table-hover", id="user_table">
             <tbody>
-              <tr>
-                <th class="tdPadding">
-                  NAME
-                </th>
-                <th class="tdPadding">
-                  Email
-                </th>
-              </tr>
-
-                <%= render partial: 'users/user_details' %>
-
+                <%= render partial: 'user_details' %>
             </tbody>
           </table>
         </div>
         <!-- Add user only for admin -->
         <%if current_user.admin? %>
           <div class="col-md-6">
-            <%= form_for(@user, url: custom_user_user_path, remote: true, html:{ id: "user_form" }) do |f| %>
+            <%= form_for(@user, url: custom_user_user_path, remote: true, html:{ id: "user_form" }, validate: true) do |f| %>
 
               <div class="form">
                 <div id="error_div">
@@ -60,7 +53,7 @@
                 <%= f.email_field :email, placeholder: "Email" %>
                 <%= f.text_field :first_name, autofocus: true, placeholder: "First name" %>
                 <%= f.text_field :last_name, placeholder: "Last name"%>
-                <%= f.text_field :dob, class: "datepicker", placeholder: "Date of birth"%>
+                <%= f.date_field :dob, class: "datepicker", placeholder: "Date of birth"%>
                 <%= f.text_field :phone_number, placeholder: "Phone number"%>
                 <% if @minimum_password_length %>
                   <em>(<%= @minimum_password_length %> characters minimum)</em>
@@ -84,100 +77,64 @@
         <% if current_user.admin? %>
         <div class="row">
           <div class="col-md-6">
-          <div class="login-page">
-    <div id="task_error_div">
-      <%= render partial: 'tasks/task_error_partial' %>
-    </div>
-  <div class="form">
-    <h2>ASSIGN TASK </h2>
-    <div id="bodyDiv">
-      <%= form_for(@task, url: assign_task_task_path(id: @team.id), remote: true, html:{ id: "task_form" }) do |f| %>
-        <div id="task_error_div">
+            <div class="login-page">
+              <div id="task_error_div">
+                <%= render partial: 'tasks/task_error_partial' %>
+              </div>
+              <div class="form">
+                <h2>ASSIGN TASK </h2>
+                <div id="bodyDiv">
+                  <%= render partial: 'tasks/new_task_create' %>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+
+          <div class="col-md-6">
+            <table class="table table-hover", id="task_table">
+              <tbody>
+
+
+                  <%= render partial: 'tasks/task_status' %>
+
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="field">
-          <%=f.text_field :name, placeholder: "Task Name" %>
-        </div>
-        <div class="field">
-          <%=f.text_field :duration, placeholder: "Task Duration" %>
-        </div>
-        <div class="field">
-          <%=f.label :select_user___ %>
-          <%= f.select :user_id, @users.all.collect {|p| [p.email, p.id]} %>
-        </div>
-        <div class="actions">
-          <%= f.submit "Assign Task", class: "btn btn-primary blueText" %>
-        </div>
+      <% else %>
+
+        <table class="table table-hover", id="user_table">
+          <tbody>
+            <tr>
+              <th class="tdPadding">
+                Task
+              </th>
+              <th class="tdPadding">
+                Duration
+              </th>
+              <th class="tdPadding">
+                Status
+              </th>
+              <th class="tdPadding">
+              </th>
+            </tr>
+            <%@user_tasks.each do|task| %>
+              <tr>
+                <td class="tdPadding"><%= task.name %></td>
+                <td class="tdPadding"><%= task.duration %></td>
+                <td class="tdPadding"><%= task.status %></td>
+                <td class="tdPadding"><%= link_to 'Task Status', task_action_task_path(task),  {    remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>   </td>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
       <% end %>
     </div>
   </div>
 </div>
-          </div>
-           <div class="col-md-6">
-          <div class="row">
-                  <div class="col-md-3">
-                    <h3> Task </h3>
-                  </div>
-                   <div class="col-md-3">
-                    <h3>User</h3>
-                  </div>
-                   <div class="col-md-3">
-                    <h3>Duration</h3>
-                  </div>
-                   <div class="col-md-3">
-                    <h3>Status</h3>
-                  </div>
-                </div>
-
-<div id="task_table">
-    <%= render partial: 'tasks/task_status' %>
-      </div>
-
-                 </div>
-              </div>
-            </div>
-        <% else %>
-        <div class="table">
-            <div class="row">
-              <div class="col-md-3">
-                <h3> Task </h3>
-              </div>
-              <div class="col-md-3">
-                <h3>Duration</h3>
-              </div>
-              <div class="col-md-3">
-                <h3>Status</h3>
-              </div>
-              <div class="col-md-3">
-                <h3></h3>
-              </div>
-            </div>
-            <%@user_tasks.each do|task| %>
-              <div class="row">
-                <div class="col-md-3">
-                  <%= task.name %>
-                </div>
-                <div class="col-md-3">
-                  <%= task.duration %>
-                </div>
-                <div class="col-md-3">
-                  <%= task.status %>
-                </div>
-                <div class="col-md-3">
-                  <%= link_to 'Task Status', task_action_task_path(task),  {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
 
 </div>
-
-
-
 
 
 

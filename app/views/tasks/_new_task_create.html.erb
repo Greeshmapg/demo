@@ -1,0 +1,18 @@
+<%= form_for(@task, validate: true, url: assign_task_task_path(id: @team.id), remote: true, html:{ id: "task_form" }) do |f| %>
+  <div id="task_error_div">
+
+  </div>
+  <div class="field">
+    <%=f.text_field :name, placeholder: "Task Name" %>
+  </div>
+  <div class="field">
+    <%=f.text_field :duration, placeholder: "Task Duration" %>
+  </div>
+  <div class="field">
+    <%=f.label :select_user___ %>
+    <%= f.select :user_id, @users.all.collect {|p| [p.email, p.id]} %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Assign Task", class: "btn btn-primary blueText" %>
+  </div>
+<% end %>

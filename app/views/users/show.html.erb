@@ -1,81 +1,70 @@
 <div class="bodyDiv">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card">
-          <%= form_for(@user) do |f| %>
-             <%= render partial: 'user_error_partial' %>
-            <% if  @user.picture? %>
-               <%= image_tag @user.picture.url %>
-            <% else %>
-               <%= image_tag ("user.jpg"), size: "100x100"%><br>
-            <% end %>
-            <h1><%=@user.full_name%></h1>
-            <b class="title"> <%= "Change your profile picture :" %></b>
-            <%= f.file_field :picture %>
-            <%= f.submit "Upload", class: "buttonUpload" %>
-            <%= link_to "Change your password", edit_user_registration_path , class: "btn btn-primary" %>
-          <%end %>
-        </div>
+  <% if  !current_user.admin? %>
+    <div class="row">
+      <div class="col-md-4">
+        <%= render 'profile'%>
       </div>
       <div class="col-md-8">
-        <% if  !current_user.admin? %>
-          <%= form_for(@user) do |f| %>
-            <div class="row">
-
-              <div class="col-md-3 label">
-                  <%= "Name" %>
-              </div>
-              <div class="col-md-3 label">
-                <%= @user.full_name %>
-              </div>
-              <div class="col-md-6 label">
-              </div>
+        <%= form_for(@user) do |f| %>
+          <div class="row">
+            <div class="col-md-3 label">
+              <%= "Name" %>
             </div>
-            <br>
-            <div class="row">
-              <div class="col-md-3 label">
-                <%= "DOB" %>
-              </div>
-              <div class="col-md-3 label">
-                <%= @user.dob.strftime("%d/%m/%Y")%>
-              </div>
-              <div class="col-md-6 label">
-              </div>
+            <div class="col-md-3 label">
+              <%= @user.full_name %>
             </div>
-            <br>
-            <div class="row">
-              <div class="col-md-3 label">
-                <%= "Phone Number" %>
-              </div>
-              <div class="col-md-3 label">
-                <%= @user.phone_number %>
-              </div>
-              <div class="col-md-6 label">
-              </div>
+            <div class="col-md-6 label">
             </div>
-            <br>
-            <div class="row">
-              <div class="col-md-3 label">
-                <%= "email" %>
-              </div>
-              <div class="col-md-3 label">
-                <%= @user.email %>
-              </div>
-              <div class="col-md-6 label">
-              </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-3 label">
+              <%= "DOB" %>
             </div>
-            <br>
-            <div class="row">
-              <div class="col-md-2 label">
-              </div>
-              <div class="col-md-3 label">
-                <centre><%= link_to "EDIT PROFILE", view_edit_profile_user_path(@user), class: "btn btn-primary" %></centre>
-              </div>
+            <div class="col-md-3 label">
+              <%= @user.dob.strftime("%d/%m/%Y")%>
             </div>
-          <%end%>
+            <div class="col-md-6 label">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-3 label">
+              <%= "Phone Number" %>
+            </div>
+            <div class="col-md-3 label">
+              <%= @user.phone_number %>
+            </div>
+            <div class="col-md-6 label">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-3 label">
+              <%= "email" %>
+            </div>
+            <div class="col-md-3 label">
+              <%= @user.email %>
+            </div>
+            <div class="col-md-6 label">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-2 label">
+           </div>
+            <div class="col-md-3 label">
+              <centre><%= link_to "EDIT PROFILE", view_edit_profile_user_path(@user), class: "btn btn-primary" %></centre>
+            </div>
+          </div>
         <%end%>
       </div>
-  </div>
+    </div>
+  <% else %>
+    <div class="row">
+      <%= render 'profile' %>
+    </div>
+  <% end %>
 </div>
 
 

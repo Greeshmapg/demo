@@ -1,5 +1,8 @@
 <% if current_user.admin? %>
-$('#user_table').html("<%= j render partial: 'user_details' %>");
+  $('#user_table').html("<%= j render partial: 'user_details' %>");
+  $('#flashDiv').html("<%= j render partial: 'layouts/flash_message' %>");
 <% else %>
-$('#groups_table').html("<%= j render partial: 'groups' %>");
+  $('#groups_table').html("<%= j render partial: 'groups' %>");
+  $('#flashDiv').html("<%= j render partial: 'layouts/flash_message' %>");
 <% end %>
+$("#flashDiv" ).fadeOut(3000);

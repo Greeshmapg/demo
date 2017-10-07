@@ -8,10 +8,10 @@
 <% end %>
   <div class="form">
     <h2>UPDATE PROFILE</h2>
-    <%= form_for(@user, url: edit_user_profile_user_path) do |f| %>
+    <%= form_for(@user, url: edit_user_profile_user_path, validate: true) do |f| %>
       <div class="field" >
         <%= f.label :First_Name, :class => "label" %>
-        <%= f.text_field :first_name, autofocus: true %>
+        <%= f.text_field :first_name, autofocus: true, validate: true%>
       </div>
       <div class="field" >
         <%= f.label :Last_Name, :class => "label" %>
@@ -19,11 +19,11 @@
       </div>
       <div class="field" >
         <%= f.label :DOB, :class => "label" %>
-        <%= f.text_field :dob, class: "datepicker", value: @user.dob.strftime("%d/%m/%y")%>
+        <%= f.date_field :dob, class: "datepicker", value: @user.dob.strftime("%d/%m/%y")%>
       </div>
       <div class="field" >
         <%= f.label :Phone_Number, :class => "label" %>
-        <%= f.text_field :phone_number %>
+        <%= f.telephone_field :phone_number %>
       </div>
       <div class="field" >
         <%= f.label :Email, :class => "label" %>
@@ -32,5 +32,6 @@
 
       <%= f.submit "UPDATE" ,:class => "btn btn-primary blueText"%>
     <% end %>
+    <%= link_to 'Back', user_path %>
   </div>
 </div>

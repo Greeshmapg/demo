@@ -1,0 +1,15 @@
+<div class="card">
+  <%= form_for(@user) do |f| %>
+    <%= render partial: 'user_error_partial' %>
+    <%# if  @user.picture? %>
+       <%= image_tag @user.picture.url,class: "style_image" %>
+           <%# else %>
+       <%#= image_tag ("user.jpg"), size: "100x100"%><br>
+    <%# end %>
+    <h1><%=@user.full_name%></h1>
+    <b class="title"> <%= "Change your profile picture :" %></b>
+    <%= f.file_field :picture %>
+    <%= f.submit "Upload", class: "buttonUpload" %>
+    <%= link_to "Change your password", edit_user_registration_path , class: "btn btn-primary" %>
+  <%end %>
+</div>
